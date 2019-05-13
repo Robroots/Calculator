@@ -13,11 +13,11 @@ class DecCalculator extends Calculator {
         for (let i = numberX.length - 1; i >= 0; i--) {
             let carryBit = numberX[i] + numberY[i] + result[i];
             let modulo = Math.floor(carryBit % 10);
-            if (carryBit > 9) {
-                result[i] += modulo;
-                result[i - 1] = 1;
-            } else {
+            if(carryBit < 10){
                 result[i] = carryBit;
+            }else {
+                result[i] = modulo;
+                result[i-1] += 1;
             }
         }
         return result;
@@ -33,7 +33,7 @@ class DecCalculator extends Calculator {
         this.prevValue = root.text();
         root.text('');
         root.trigger('focus');
-        root.on('keypress', e => {
+        root.on('keydown', e => {
             if (root.text().length > 0) {
                 root.blur();
             }
@@ -55,11 +55,12 @@ class DecCalculator extends Calculator {
             let jItem = $(item);
             jItem.parent().stop()
             if (parseInt(jItem.text()) !== this.resultNumberArray[i]) {
-                jItem.parent().slideUp('', () => jItem.text(this.resultNumberArray[i]));
+                jItem.parent().slideUp('', () => {
+                    jItem.text(this.resultNumberArray[i])
+                });
                 jItem.parent().slideDown();
             }
         });
-
     }
     initEvents() {
         this.$calculatorDOMElement.find(".display-number > span").on("click", (e) => {

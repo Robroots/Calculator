@@ -55,10 +55,11 @@ class DecCalculator extends Calculator {
             let jItem = $(item);
             jItem.parent().stop()
             if (parseInt(jItem.text()) !== this.resultNumberArray[i]) {
-                jItem.parent().slideUp('', () => {
+                jItem.parent().slideUp(200, () => {
                     jItem.text(this.resultNumberArray[i])
+                    jItem.parent().slideDown(200);
                 });
-                jItem.parent().slideDown();
+
             }
         });
     }
